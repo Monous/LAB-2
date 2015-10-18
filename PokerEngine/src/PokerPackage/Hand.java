@@ -41,7 +41,7 @@ public class Hand {
 
 	// This should never be used explicitly
 
-	public Hand() {
+	private Hand() {
 	}
 
 	/**
@@ -49,14 +49,21 @@ public class Hand {
 	 */
 	public Hand(Deck deck) throws DeckOutOfCardsException {
 		try {
+			boolean jokerCard = false;
 			for (int i = 0; i < 5; i++) {
 
 				Card tempCard = deck.getCard();
 				this.hand.add(tempCard);
+				if (tempCard.getRank() == Rank.JOKER) {
+					jokerCard = true;
+				}
 			}
-			this.initSuitsAndSorted();
-
-			HandType.checkHand(this);
+			if (jokerCard) {
+				handleJokers();
+			} else {
+				this.initSuitsAndSorted();
+				HandType.checkHand(this);
+			}
 
 		} catch (DeckOutOfCardsException e) {
 			throw new DeckOutOfCardsException();
@@ -122,11 +129,12 @@ public class Hand {
 	 */
 	public void initSuitsAndSorted() {
 		// The containers need to be cleared, otherwise the handleJokers method
-		// will improperly add values in the checking of ranks and suits/determining hand type
+		// will improperly add values in the checking of ranks and
+		// suits/determining hand type
 		// for loop (in handleJokers()).
 		this.suitsInHand.clear();
 		this.sortedRankInHand.clear();
-		
+
 		for (Card c : this.hand) {
 			if (this.suitsInHand.containsKey(c.getSuit())) {
 				int curVal = this.suitsInHand.get(c.getSuit());
@@ -184,8 +192,7 @@ public class Hand {
 					}
 				}
 			}
-			
-			
+
 			for (int j = 0; j < Math.pow(52.0, numOfJokers); j++) {
 				combinations.get(j).getHand().set(pos, allCards.get(i));
 				i++;
@@ -193,27 +200,36 @@ public class Hand {
 					i = 0;
 
 			}
-			
+
 			// Checking the ranks and suits in each hand...evaluating the hand
-			for (Hand h : combinations){
+			for (Hand h : combinations) {
 				h.initSuitsAndSorted();
-				//System.out.println(h.getSortedVals() + "    " + h.getSuitsInHand());
 				HandType.checkHand(h);
 			}
 			++nextIndex;
 			--numOfJokersCopy;
 		} while (numOfJokersCopy > 0);
-		
-		//ArrayList<Integer> pos = new ArrayList<Integer>();
-		//pos = HandType.judgeHands(combinations);
+
+		ArrayList<Integer> pos = new ArrayList<Integer>();
+		pos = HandType.judgeHands(combinations);
+
+		setEqual(combinations.get(pos.get(0)));
 	}
-	
-	public Hand getHandInCombos(int pos){
+
+	public Hand getHandInCombos(int pos) {
 		return this.combinations.get(pos);
 	}
 
 	public List<Hand> getCombos() {
 		return this.combinations;
+	}
+
+	public void setEqual(Hand hand) {
+		this.hand = hand.getHand();
+		this.handType = hand.getHandType();
+		this.kickerPossibilities = hand.getKickerPossibilities();
+		this.suitsInHand = hand.getSuitsInHand();
+		this.sortedRankInHand = hand.getSortedVals();
 	}
 
 	@Override

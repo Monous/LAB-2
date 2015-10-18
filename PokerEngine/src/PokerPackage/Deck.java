@@ -18,7 +18,7 @@ public class Deck {
 
 	public Deck() {
 		// Calls Deck(int) constructor with numOfDecks = 1;
-		this(1, 0);
+		this(1, 0, 0);
 	}
 
 	/*
@@ -26,12 +26,11 @@ public class Deck {
 	 * just serves to determine the size of the deck and make the ArrayList of
 	 * type Card for the deck object.
 	 */
-	public Deck(int numOfDecks, int numOfJokers) {
+	public Deck(int numOfDecks, int numOfJokers, int wildCardRank) {
 		this.numOfDecks = numOfDecks;
-		// This deck size is the number of cards in the deck
 		this.deckSize = numOfDecks * 52;
 		this.deck = new ArrayList<Card>(this.deckSize);
-		makeDeck(this.numOfDecks, numOfJokers);
+		makeDeck(this.numOfDecks, numOfJokers, wildCardRank);
 
 		Collections.shuffle(this.deck);
 	}
@@ -43,10 +42,17 @@ public class Deck {
 	 * 
 	 */
 	// http://thefamilypodcastnetwork.com/wp-content/uploads/2014/10/meme-sticker-likeaboss.jpg
-	public void makeDeck(int numberOfDecks, int numOfJokers) {
+	public void makeDeck(int numberOfDecks, int numOfJokers, int wildCardRank) {
 		for (Rank r : Rank.values()) {
 			for (Suit s : Suit.values()) {
-				deck.add(new Card(r, s));
+				// Since a wild card behaves like a joker, let's just add the joker
+				// and call it a day.
+				if (r.getRank() == wildCardRank) {
+					deck.add(new Card(Rank.JOKER));
+				} else {
+					Card card = new Card(r, s);
+					deck.add(card);
+				}
 			}
 		}
 		if (numOfJokers > 0) {
@@ -58,7 +64,7 @@ public class Deck {
 			return;
 		// Recursion for multiple decks
 		else
-			makeDeck(numberOfDecks, numOfJokers);
+			makeDeck(numberOfDecks, numOfJokers, wildCardRank);
 	}
 
 	public int getSize() {
@@ -91,7 +97,7 @@ public class Deck {
 
 	// This method has not yet been incorporated for the rest of the code, but I
 	// thought it could be useful for future error handling endeavors.
-	public void addNewDeck(int numberOfDecks, int numOfJokers) {
+	/*public void addNewDeck(int numberOfDecks, int numOfJokers) {
 		this.makeDeck(numberOfDecks, numOfJokers);
-	}
+	}*/
 }

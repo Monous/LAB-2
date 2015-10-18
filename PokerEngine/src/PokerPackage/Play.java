@@ -51,7 +51,7 @@ public class Play {
 		int numOfDecks = input.nextInt();
 		System.out.println("How many Jokers do you want?");
 		int numOfJokers = input.nextInt();
-		Deck deck = new Deck(numOfDecks, numOfJokers);
+		Deck deck = new Deck(numOfDecks, numOfJokers, 0);
 		
 		System.out.println("How many players are there?");
 		int numOfPlayers = input.nextInt();

@@ -9,6 +9,7 @@ package PokerPackage;
 public class Card{
 	private Rank rank;
 	private Suit suit;
+	private boolean wild;
 
 	public Card(){
 		

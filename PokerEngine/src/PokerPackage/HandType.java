@@ -23,8 +23,8 @@ public enum HandType {
 	// straight, fourth is flush
 	NO_PAIR(0, 0, false, false), ONE_PAIR(1, 1, false, false), TWO_PAIR(2, 2, false, false), THREE_OF_A_KIND(3, 3,
 			false, false), STRAIGHT(4, -1, true, false), FLUSH(5, -1, false, true), FULL_HOUSE(6, 4, false,
-					false), FOUR_OF_A_KIND(7, 5, false, false), STRAIGHT_FLUSH(8, -1, true, true), FIVE_OF_A_KIND(9, 6,
-							false, false), ROYAL_FLUSH(10, -1, true, true);
+					false), FOUR_OF_A_KIND(7, 5, false, false), FIVE_OF_A_KIND(8, 6,
+							false, false), STRAIGHT_FLUSH(9, -1, true, true), ROYAL_FLUSH(10, -1, true, true);
 
 	private int rankValue;
 	private int pairValue;
