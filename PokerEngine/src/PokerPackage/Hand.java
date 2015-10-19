@@ -77,9 +77,15 @@ public class Hand {
 		this.hand.add(c3);
 		this.hand.add(c4);
 		this.hand.add(c5);
-		this.initSuitsAndSorted();
 
-		HandType.checkHand(this);
+		if (c1.getRank() == Rank.JOKER || c2.getRank() == Rank.JOKER || c3.getRank() == Rank.JOKER
+				|| c3.getRank() == Rank.JOKER || c4.getRank() == Rank.JOKER || 
+				c5.getRank() == Rank.JOKER) {
+			handleJokers();
+		} else {
+			this.initSuitsAndSorted();
+			HandType.checkHand(this);
+		}
 	}
 
 	public HandType getHandType() {

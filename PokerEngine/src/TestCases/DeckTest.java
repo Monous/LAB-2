@@ -1,9 +1,9 @@
 package TestCases;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,28 +12,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import PokerPackage.Card;
+import PokerPackage.Deck;
+import PokerPackage.DeckOutOfCardsException;
 import PokerPackage.Hand;
 import PokerPackage.HandType;
 import PokerPackage.Rank;
 import PokerPackage.Suit;
 
-/**
- * 
- * @author Roy Cheng
- *
- */
-public class handleJokersTest {
-	private static Card c10 = new Card(Rank.KING, Suit.SPADE);
-	private static Card c11 = new Card(Rank.KING, Suit.SPADE);
-	private static Card c12 = new Card(Rank.JOKER);
-	private static Card c13 = new Card(Rank.JOKER);
-	private static Card c14 = new Card(Rank.JOKER);
-	private static Hand hand1 = new Hand(c10,c11,c12,c13,c14);
+public class DeckTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
-
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
@@ -47,13 +38,20 @@ public class handleJokersTest {
 	}
 
 	@Test
-	public void test() {
-		hand1.handleJokers();
+	public void test() throws DeckOutOfCardsException {
+		Deck deck1 = new Deck(1, 2, 0);
+		Hand Player1Hand = new Hand(deck1);
+		Hand Player2Hand = new Hand(deck1);
+		Hand Player3Hand = new Hand(deck1);
+		deck1.printDeck();
+		System.out.println(Player1Hand);
+		System.out.println(Player2Hand);
+		System.out.println(Player3Hand);
 		
-		System.out.println(hand1.getHandType());
-		System.out.println(hand1.getHand());
+		ArrayList positions = HandType.judgeHands(Arrays.asList(Player1Hand, Player2Hand, Player3Hand));
+		System.out.println(positions);
 		
-		//System.out.println(hand1.getHandInCombos(2703) + " " + hand1.getHandInCombos(2703).getHandType());
+		
 		
 	}
 
