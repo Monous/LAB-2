@@ -25,7 +25,7 @@ import PokerPackage.Suit;
 public class handleJokersTest {
 	private static Card c10 = new Card(Rank.KING, Suit.SPADE);
 	private static Card c11 = new Card(Rank.KING, Suit.SPADE);
-	private static Card c12 = new Card(Rank.JOKER);
+	private static Card c12 = new Card(Rank.QUEEN, Suit.SPADE);
 	private static Card c13 = new Card(Rank.JOKER);
 	private static Card c14 = new Card(Rank.JOKER);
 	private static Hand hand1 = new Hand(c10,c11,c12,c13,c14);
@@ -48,7 +48,6 @@ public class handleJokersTest {
 
 	@Test
 	public void test() {
-		hand1.handleJokers();
 		
 		System.out.println(hand1.getHandType());
 		System.out.println(hand1.getHand());
