@@ -20,6 +20,7 @@ import java.util.TreeMap;
 
 public class Hand {
 
+	boolean jokerCard;
 	private HandType handType;
 	private List<Hand> combinations = new ArrayList<Hand>();
 	private ArrayList<Card> hand = new ArrayList<Card>(5);
@@ -49,16 +50,15 @@ public class Hand {
 	 */
 	public Hand(Deck deck) throws DeckOutOfCardsException {
 		try {
-			boolean jokerCard = false;
 			for (int i = 0; i < 5; i++) {
 
 				Card tempCard = deck.getCard();
 				this.hand.add(tempCard);
 				if (tempCard.getRank() == Rank.JOKER) {
-					jokerCard = true;
+					this.jokerCard = true;
 				}
 			}
-			if (jokerCard) {
+			if (this.jokerCard) {
 				handleJokers();
 			} else {
 				this.initSuitsAndSorted();
@@ -81,6 +81,7 @@ public class Hand {
 		if (c1.getRank() == Rank.JOKER || c2.getRank() == Rank.JOKER || c3.getRank() == Rank.JOKER
 				|| c3.getRank() == Rank.JOKER || c4.getRank() == Rank.JOKER || 
 				c5.getRank() == Rank.JOKER) {
+			this.jokerCard = true;
 			handleJokers();
 		} else {
 			this.initSuitsAndSorted();
@@ -114,6 +115,14 @@ public class Hand {
 
 	public ArrayList<Card> getHand() {
 		return this.hand;
+	}
+	
+	public boolean hasJoker(){
+		return this.jokerCard;
+	}
+	
+	public void setJoker (boolean isTrue){
+		this.jokerCard = isTrue;
 	}
 
 	// Testing method
@@ -200,6 +209,7 @@ public class Hand {
 			}
 
 			for (int j = 0; j < Math.pow(52.0, numOfJokers); j++) {
+				combinations.get(j).setJoker(true);
 				combinations.get(j).getHand().set(pos, allCards.get(i));
 				i++;
 				if (i == Math.pow(52.0, (curIndex + 1)))

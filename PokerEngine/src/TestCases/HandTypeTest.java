@@ -139,7 +139,7 @@ public class HandTypeTest {
 		assertEquals(hand8a.getHandType(), HandType.FOUR_OF_A_KIND);
 		assertEquals(hand9.getHandType(), HandType.FIVE_OF_A_KIND);
 		assertEquals(hand10.getHandType(), HandType.STRAIGHT_FLUSH);
-		assertEquals(hand11.getHandType(), HandType.ROYAL_FLUSH);
+		assertEquals(hand11.getHandType(), HandType.NATURAL_ROYAL_FLUSH);
 	}
 
 }
