@@ -97,7 +97,8 @@ public class HandTypeTest {
 	private static Hand hand8a = new Hand(s1,c2,d2,h2,s2);
 	private static Hand hand9 = new Hand(s1,c1,d1,h1,special);
 	private static Hand hand10 = new Hand(s1,s2,s3,s4,s5);
-	private static Hand hand11 = new Hand(s1,s10,s11,s12,s13);
+	private static Hand hand11 = new Hand(s1, s10, special, s12, s13);
+	private static Hand hand12 = new Hand(s1,s10,s11,s12,s13);
 	
 	private static List<Hand> handCombos = new ArrayList<Hand>();
 
@@ -139,7 +140,8 @@ public class HandTypeTest {
 		assertEquals(hand8a.getHandType(), HandType.FOUR_OF_A_KIND);
 		assertEquals(hand9.getHandType(), HandType.FIVE_OF_A_KIND);
 		assertEquals(hand10.getHandType(), HandType.STRAIGHT_FLUSH);
-		assertEquals(hand11.getHandType(), HandType.NATURAL_ROYAL_FLUSH);
+		assertEquals(hand11.getHandType(), HandType.ROYAL_FLUSH);
+		assertEquals(hand12.getHandType(), HandType.NATURAL_ROYAL_FLUSH);
 	}
 
 }
