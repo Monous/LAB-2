@@ -71,7 +71,8 @@ public class TableController{
 	
 	@FXML
 	private void initialize(){
-		p1Leave.setVisible(false); /*p2Leave.setVisible(false);*/ p3Leave.setVisible(false); p4Leave.setVisible(false);
+		p1Leave.setVisible(false); p2Leave.setVisible(false); p3Leave.setVisible(false); p4Leave.setVisible(false);
+		p1Name.setVisible(false); p2Name.setVisible(false); p3Name.setVisible(false); p4Name.setVisible(false);
 		p1Sit.setOnAction(this::handleSit); p2Sit.setOnAction(this::handleSit); p3Sit.setOnAction(this::handleSit);
 		p4Sit.setOnAction(this::handleSit);
 		/*p1Sit.setOnAction(new EventHandler<ActionEvent>(){

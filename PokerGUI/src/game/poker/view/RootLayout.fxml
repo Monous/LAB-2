@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="750.0" maxWidth="1024.0" minHeight="750.0" minWidth="1024.0" prefHeight="750.0" prefWidth="1024.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="750.0" minHeight="750.0" prefHeight="750.0" prefWidth="1024.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -24,6 +24,16 @@
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Game">
+              <items>
+                <MenuItem mnemonicParsing="false" text="5 Card Joker Poker" />
+                  <MenuItem mnemonicParsing="false" text="5 Card Wild Poker (Deuces Wild)" />
+                  <MenuItem mnemonicParsing="false" text="5 Card Draw" />
+                  <MenuItem mnemonicParsing="false" text="7 Card Draw" />
+                  <MenuItem mnemonicParsing="false" text="Texas Hold 'em " />
+                  <MenuItem mnemonicParsing="false" text="Omaha" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
