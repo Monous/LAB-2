@@ -25,6 +25,8 @@ public class Deck {
 	 * This is the primary constructor. It does not actually make the deck. It
 	 * just serves to determine the size of the deck and make the ArrayList of
 	 * type Card for the deck object.
+	 * For no wild cards, simply pass 0 for wildCardRank. Otherwise, pass the rank for the wild card
+	 * as given in Rank.java 
 	 */
 	public Deck(int numOfDecks, int numOfJokers, int wildCardRank) {
 		this.numOfDecks = numOfDecks;
