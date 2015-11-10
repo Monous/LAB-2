@@ -1,4 +1,4 @@
-package game.poker;
+/*package game.poker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +11,9 @@ import javafx.scene.text.Text;
 public class PlayerController {
 	private Player p;
 	private MainApp mainApp;
-	/*
+	/
 	 * to get the buttons for each players, reference the fxml buttons in tablecontroller then add to the buttons arraylist
-	 */
+	 /
 	Map<String, Object> playerNodes = new HashMap<String, Object>();
 	
 	private PlayerController(){
@@ -33,3 +33,4 @@ public class PlayerController {
 		playerNodes.put(nameOfNode, node);
 	}
 }
+**/

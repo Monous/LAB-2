@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import PokerPackage.Table;
+
 import game.poker.view.TableController;
 
 public class MainApp extends Application {
@@ -14,7 +14,7 @@ public class MainApp extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 	private BorderPane pokerTable;
-	private Table table = new Table();
+
 	
 	public MainApp(){
 		
@@ -40,6 +40,9 @@ public class MainApp extends Application {
 			
 			this.primaryStage.setScene(scene);
 			this.primaryStage.show();
+			
+			RootController controller = loader.getController();
+			controller.setMainApp(this);
 		} catch (Exception e){
 			e.printStackTrace();
 		}

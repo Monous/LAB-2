@@ -36,7 +36,7 @@ public class Deck {
 
 		Collections.shuffle(this.deck);
 	}
-
+	
 	/*
 	 * This method actually creates the deck. The nested for loop will always
 	 * result in the creation of 52 cards... so we only need the deck size for

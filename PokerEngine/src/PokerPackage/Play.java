@@ -3,6 +3,9 @@ package PokerPackage;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import domain.PlayDomain;
+
+
 /**
  * @author Moheem Ilyas
  * 
@@ -17,75 +20,94 @@ import java.util.Scanner;
  * Assignment:          Lab 2
  *
  */
-public class Play {
-
-	public static void main(String[] args) throws DeckOutOfCardsException {
-		try {
-			playPoker();
-			/*
-			 * The exception below will only be caught once.
-			 */
-		} catch (DeckOutOfCardsException e) {
-			Scanner input = new Scanner(System.in);
-			System.out.println("The deck is out of cards, would you like to add more?");
-			String response = input.nextLine().toString();
-			if (response.equals("yes") || response.equals("Yes")) {
-				playPoker();
-			}else {
-				input.close();
-				return;
-			}
-			
-			input.close();
+public class Play extends PlayDomain {
+	private ArrayList<Player> players = new ArrayList<Player>();
+	private ArrayList<Player> winners = new ArrayList<Player>();
+	private eGame gameType;
+	private Deck deck;
+	private ArrayList<Card> communityCards = new ArrayList<Card>();
+	
+	public Play(eGame gameType){
+		this.gameType = gameType;		
+	}
+	
+	public void addPlayer(Player p){
+		this.players.add(p);
+	}
+	
+	public void setPlayers(ArrayList<Player> players){
+		this.players = players;
+	}
+	
+	public void setGameType(eGame gameType, ArrayList<Player> players){
+		this.players = players;
+		this.gameType = gameType;
+	}
+	
+	public eGame getEGame(){
+		return this.gameType;
+	}
+	
+	public void play(){
+		switch (this.gameType){
+		case FIVECARDSTUD:
+			playFiveStud();
+			break;
+		case FIVECARDJOKERPOKER:
+			playFiveJoker();
+			break;
+		case FIVECARDWILDPOKER:
+			playFiveWild();
+			break;
+		case FIVECARDDRAW:
+			playFiveDraw();
+			break;
+		case SEVENCARDDRAW:
+			playSevenDraw();
+			break;
+		case HOLDEM:
+			playHoldEm();
+			break;
+		case OMAHA:
+			playOmaha();
+			break;
 		}
 	}
-
-	/*
-	 * Method to create a deck and make hands out of that deck.
-	 */
-	public static void playPoker() throws DeckOutOfCardsException {
-		Scanner input = new Scanner(System.in);
-
-		System.out.println("How many decks do you want to have?");
-		// Error handling needs to be implemented in case the user enters a number 0 or below.
-		int numOfDecks = input.nextInt();
-		System.out.println("How many Jokers do you want?");
-		int numOfJokers = input.nextInt();
-		Deck deck = new Deck(numOfDecks, numOfJokers, 0);
-		
-		System.out.println("How many players are there?");
-		int numOfPlayers = input.nextInt();
+	
+	private void playFiveStud(){
+		this.deck = new Deck(1, 0, 0);
 		ArrayList<Hand> playerHands = new ArrayList<Hand>();
-		for (int i = 0; i < numOfPlayers; i++){
-			playerHands.add( new Hand(deck));
+		for (Player p : this.players){
+			p.setHand(this.deck);
 		}
 		
-		input.close();
-		
-		printHands(playerHands);
-		printWinner(playerHands);
-	}
-	
-	/*
-	 * Method to print the hands formatted nice and neat.
-	 */
-	public static void printHands(ArrayList<Hand> hands){
-		for (int i = 0; i < hands.size(); i++) {
-			System.out.println("Player " + (i + 1));
-			System.out.println(hands.get(i));
-			System.out.println(hands.get(i).getHandType());
-			System.out.println("");
+		ArrayList<Integer> positions = HandType.judgeHands(playerHands);
+		for (Integer i : positions){
+			winners.add(players.get(i));
 		}
 	}
 	
-	/*
-	 * Method that Determines the winner and prints the winner. 
-	 */
-	public static void printWinner(ArrayList<Hand> hands){
-		ArrayList<Integer> posOfBestHands = HandType.judgeHands(hands);
-		if (posOfBestHands.size() == 1){
-			System.out.println("Player " + (posOfBestHands.get(0) + 1) + " wins!");
-		}
+	private void playFiveDraw(){
+		
 	}
-
+	
+	private void playFiveJoker(){
+		
+	}
+	
+	private void playFiveWild(){
+		
+	}
+	
+	private void playSevenDraw(){
+		
+	}
+	
+	private void playHoldEm(){
+		
+	}
+	
+	private void playOmaha(){
+		
+	}
 }

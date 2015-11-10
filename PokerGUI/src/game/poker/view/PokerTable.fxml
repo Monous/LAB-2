@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.poker.view.TableController">
+<BorderPane fx:id="pokerTable" prefHeight="700.0" prefWidth="943.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.poker.view.TableController">
    <top>
       <AnchorPane id="p1" maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -19,60 +19,61 @@
             <ButtonBar layoutX="120.0" layoutY="33.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <buttons>
                 <Button fx:id="p1Sit" minWidth="75.0" mnemonicParsing="false" text="Sit" />
-                  <Button fx:id="p1Leave" mnemonicParsing="false" onAction="#handleLeave" text="Leave" />
+                  <Button fx:id="p1Leave" mnemonicParsing="false" text="Leave" />
               </buttons>
                <padding>
                   <Insets right="120.0" />
                </padding>
             </ButtonBar>
-            <HBox id="p1Hbox" layoutX="100.0" layoutY="58.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="80.0" />
-            <Text fx:id="p1Name" fill="#f2eaea" layoutX="178.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="40.05078125" />
-            <TextField layoutX="86.0" layoutY="62.0" AnchorPane.topAnchor="62.0" />
+            <HBox id="p1Hbox" fx:id="p1CardBox" layoutX="100.0" layoutY="58.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="80.0" />
+            <Text fx:id="p1Name" fill="#f2eaea" layoutX="189.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="40.05078125" />
+            <TextField fx:id="p1NameEntry" layoutX="86.0" layoutY="62.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="62.0" />
          </children>
       </AnchorPane>
    </top>
    <left>
       <AnchorPane id="p4" prefHeight="200.0" prefWidth="256.0" BorderPane.alignment="CENTER">
          <children>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="160.0">
+            <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="206.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="160.0">
               <buttons>
-                <Button fx:id="p4Sit" minWidth="75.0" mnemonicParsing="false" text="Sit" />
-                  <Button fx:id="p4Leave" minWidth="75.0" mnemonicParsing="false" onAction="#handleLeave" text="Leave" />
+                <Button fx:id="p4Leave" minWidth="75.0" mnemonicParsing="false" text="Leave" />
+                  <Button fx:id="p4Sit" minWidth="75.0" mnemonicParsing="false" text="Sit" />
               </buttons>
             </ButtonBar>
-            <HBox id="p4Hbox" layoutX="6.0" layoutY="40.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0" />
-            <Text fx:id="p4Name" fill="#f8f3f3" layoutX="89.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="200.0" />
-            <TextField layoutX="26.0" layoutY="224.0" />
+            <HBox id="p4Hbox" fx:id="p4CardBox" layoutX="6.0" layoutY="40.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0" />
+            <Text fx:id="p4Name" fill="#f8f3f3" layoutX="89.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="200.05078125" />
+            <TextField fx:id="p4NameEntry" layoutX="26.0" layoutY="224.0" AnchorPane.leftAnchor="20.0" />
          </children>
       </AnchorPane>
    </left>
    <center>
       <AnchorPane id="com" maxHeight="300.0" maxWidth="390.0" prefHeight="300.0" prefWidth="390.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox id="comHbox" layoutX="95.0" layoutY="62.0" prefHeight="100.0" prefWidth="200.0" />
-            <ButtonBar layoutY="258.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <HBox id="comHbox" fx:id="communityCards" layoutX="95.0" layoutY="62.0" prefHeight="100.0" prefWidth="200.0" />
+            <ButtonBar layoutY="258.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0">
                <buttons>
-                  <Button mnemonicParsing="false" onAction="#handleStartGame" text="Start Game!" />
+                  <Button fx:id="startGame" mnemonicParsing="false" text="Start Game!" />
                </buttons>
                <padding>
                   <Insets right="120.0" />
                </padding>
             </ButtonBar>
+            <HBox fx:id="deckBox" layoutX="295.0" layoutY="162.0" prefHeight="66.0" prefWidth="65.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="30.0" />
          </children>
       </AnchorPane>
    </center>
    <right>
       <AnchorPane id="p2" prefHeight="200.0" prefWidth="256.0" BorderPane.alignment="CENTER">
          <children>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="160.0">
+            <ButtonBar layoutX="64.0" prefHeight="40.0" prefWidth="229.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0">
               <buttons>
                 <Button fx:id="p2Sit" minWidth="75.0" mnemonicParsing="false" text="Sit" />
-                  <Button fx:id="p2Leave" minWidth="75.0" mnemonicParsing="false" onAction="#handleLeave" text="Leave" />
+                  <Button fx:id="p2Leave" minWidth="75.0" mnemonicParsing="false" text="Leave" />
               </buttons>
             </ButtonBar>
-            <HBox id="p2Hbox" layoutX="30.0" layoutY="3.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-            <Text fx:id="p2Name" fill="#f2efef" layoutX="167.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="200.0" />
-            <TextField layoutX="104.0" layoutY="224.0" />
+            <HBox id="p2Hbox" fx:id="p2CardBox" layoutX="30.0" layoutY="3.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+            <Text fx:id="p2Name" fill="#f2efef" layoutX="145.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="200.05078125" />
+            <TextField fx:id="p2NameEntry" layoutX="104.0" layoutY="224.0" AnchorPane.rightAnchor="20.0" />
          </children>
       </AnchorPane>
    </right>
@@ -85,16 +86,16 @@
             <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
               <buttons>
                 <Button fx:id="p3Sit" minWidth="75.0" mnemonicParsing="false" text="Sit" />
-                  <Button fx:id="p3Leave" minWidth="75.0" mnemonicParsing="false" onAction="#handleLeave" text="Leave" />
+                  <Button fx:id="p3Leave" minWidth="75.0" mnemonicParsing="false" text="Leave" />
               </buttons>
                <padding>
                   <Insets right="120.0" />
                </padding>
             </ButtonBar>
-            <HBox id="p3Hbox" layoutX="100.0" layoutY="27.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="30.0" />
+            <HBox id="p3Hbox" fx:id="p3CardBox" layoutX="100.0" layoutY="27.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="30.0" />
             <TextFlow layoutX="100.0" layoutY="-100.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.topAnchor="0.0" />
-            <Text fx:id="p3Name" fill="#f8f8f8" layoutX="189.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <TextField layoutX="86.0" layoutY="111.0" AnchorPane.bottomAnchor="62.0" />
+            <Text fx:id="p3Name" fill="#f8f8f8" layoutX="189.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <TextField fx:id="p3NameEntry" layoutX="86.0" layoutY="111.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="100.0" />
          </children>
       </AnchorPane>
    </bottom>
