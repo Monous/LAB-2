@@ -48,6 +48,14 @@ public class Play extends PlayDomain {
 		return this.gameType;
 	}
 	
+	public ArrayList<Player> getPlayer(){
+		return this.players;
+	}
+	
+	public ArrayList<Player> getWinners(){
+		return this.winners;
+	}
+	
 	public void play(){
 		switch (this.gameType){
 		case FIVECARDSTUD:
@@ -79,6 +87,7 @@ public class Play extends PlayDomain {
 		ArrayList<Hand> playerHands = new ArrayList<Hand>();
 		for (Player p : this.players){
 			p.setHand(this.deck);
+			playerHands.add(p.getHand());
 		}
 		
 		ArrayList<Integer> positions = HandType.judgeHands(playerHands);
