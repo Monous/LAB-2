@@ -15,12 +15,16 @@ import PokerPackage.eGame;
 import game.poker.MainApp;
 import game.poker.RootController;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -119,8 +123,6 @@ public class TableController {
 
 	private Map<Player, Map<String, Object>> playersAndNodes = new HashMap<Player, Map<String, Object>>();
 
-	private ImageView cardBackImg = new ImageView(
-			new Image(getClass().getResourceAsStream("/img/b1fv.png"), 75, 75, true, true));
 
 	public TableController() {
 
@@ -131,7 +133,7 @@ public class TableController {
 		playAgain.setVisible(false);
 		startGame.setOnAction(this::handleStartGame);
 		winnerText.setVisible(false);
-
+	
 		ImageView deckImage = new ImageView(
 				new Image(getClass().getResourceAsStream("/img/b1fh.png"), 75, 75, true, true));
 		this.deckBox.getChildren().add(deckImage);
@@ -278,6 +280,7 @@ public class TableController {
 
 		deal();
 		
+		showWinners();
 		playAgain.setOnAction(this::handlePlayAgain);
 		playAgain.setVisible(true);
 		
@@ -304,7 +307,8 @@ public class TableController {
 		String winners = new String("The winner(s) are: ");
 		//if (this.playGame.getWinners().isEmpty()) System.out.println("True");
 		for (Player p : this.playGame.getWinners()){
-			winners = winners + p.getName() + "  ";
+			// The if statement is because the if there is a tie, the winner's name would show twice....probably should look into this
+			if (!winners.contains(p.getName())) winners = winners + p.getName() + "  ";
 		}
 		this.winnerText.setText(winners);
 		this.winnerText.setVisible(true);
@@ -312,26 +316,33 @@ public class TableController {
 
 	private void deal() {
 		// This will work for all games.
+		SequentialTransition seqTrans = new SequentialTransition();
 		for (int i = 0; i < this.playGame.getEGame().getCardsDealt(); i++) {
+			
 			for (Player p : this.playGame.getPlayer()) {
+				ImageView cardBackImg = new ImageView(
+						new Image(getClass().getResourceAsStream("/img/b1fv.png"), 75, 75, true, true));
+				
 				ImageView curImg = getCardImage(p.getHand().getHand().get(i));
-				curImg.setVisible(false);
+				
 
 				((HBox) playersAndNodes.get(p).get("CardBox")).getChildren().add(curImg);
 				curImg.setVisible(false);
 
+				
 				Bounds startBounds = this.deckBox.localToScene(this.deckBox.getBoundsInLocal());
 				Point2D startPoint = new Point2D(startBounds.getMinX(), startBounds.getMinY());
 
-				Bounds endBounds = curImg.localToScene(curImg.getBoundsInLocal());
+				Bounds endBounds = ((HBox) playersAndNodes.get(p).get("CardBox")).localToScene(((HBox) playersAndNodes.get(p).get("CardBox")).getBoundsInLocal());
 				Point2D endPoint = new Point2D(endBounds.getMinX(), endBounds.getMinY());
 
-				ParallelTransition trans = createTransition(startPoint, endPoint);
+				ParallelTransition trans = createTransition(startPoint, endPoint, cardBackImg);
 
 				// final ParallelTransition transFadeCardInOut =
 				// createFadeTransition(curImg);
 				trans.setCycleCount(1);
 				trans.setAutoReverse(false);
+				
 				trans.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
@@ -346,13 +357,20 @@ public class TableController {
 						// transFadeCardInOut.play();
 
 						curImg.setVisible(true);
+					
+						
 						
 					}
 				});
-				trans.play();
-				showWinners();
+				
+				//trans.play();
+				seqTrans.getChildren().add(trans);
 			}
+			
 		}
+		
+		seqTrans.play();
+		
 		if (this.playGame.getCommunityCards().size() > 0){
 			for (Card c : this.playGame.getCommunityCards()){
 				System.out.println(c);
@@ -360,14 +378,17 @@ public class TableController {
 				this.communityCards.getChildren().add(curImg);
 			}
 		}
+		
 	}
 
-	private ParallelTransition createTransition(Point2D pntStartPoint, Point2D pntEndPoint) {
+	private ParallelTransition createTransition(Point2D pntStartPoint, Point2D pntEndPoint, ImageView cardBackImg) {
 
-		cardBackImg.setX(pntStartPoint.getX());
-		cardBackImg.setY(pntStartPoint.getY() - 30);
 		if (pokerTable.getChildren().contains(cardBackImg))
 			pokerTable.getChildren().remove(cardBackImg);
+		
+		cardBackImg.setX(pntStartPoint.getX());
+		cardBackImg.setY(pntStartPoint.getY() - 30);
+		
 		this.pokerTable.getChildren().add(cardBackImg);
 	
 
