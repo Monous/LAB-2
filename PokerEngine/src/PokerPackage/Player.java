@@ -10,6 +10,7 @@ public class Player extends PlayerDomain{
 	
 	public Player(){
 		super();
+		this.hand = new Hand();
 	}
 	
 	public Hand getHand(){
@@ -23,5 +24,9 @@ public class Player extends PlayerDomain{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void setHand(Hand hand){
+		this.hand = hand;
 	}
 }

@@ -49,7 +49,8 @@ public class TableController {
 	
 	@FXML
 	private Text winnerText;
-	
+	@FXML
+	private Button playAgain;
 	@FXML
 	private HBox communityCards;
 	@FXML
@@ -127,6 +128,7 @@ public class TableController {
 
 	@FXML
 	private void initialize() {
+		playAgain.setVisible(false);
 		startGame.setOnAction(this::handleStartGame);
 		winnerText.setVisible(false);
 
@@ -276,14 +278,21 @@ public class TableController {
 
 		deal();
 		
-		showWinners();
-		/*
-		 * for (Player p : playersAndNodes.keySet()){ if (p.getHand() != null){
-		 * for (Card c : p.getHand().getHand()){ ((HBox)
-		 * playersAndNodes.get(p).get("CardBox")).getChildren().add((ImageView)
-		 * getCardImage(c));
-		 * //communityCards.getChildren().add(getCardImage(c)); } } }
-		 */
+		playAgain.setOnAction(this::handlePlayAgain);
+		playAgain.setVisible(true);
+		
+	}
+	
+	private void handlePlayAgain(ActionEvent e){
+		this.communityCards.getChildren().clear();
+		for (Map<String, Object> playerMap : playersAndNodes.values()) {
+			((HBox) playerMap.get("CardBox")).getChildren().clear();;
+			((Text) playerMap.get("HandTypeText")).setText(null);;
+		}
+		
+		this.winnerText.setText(null);
+		this.playAgain.setVisible(false);
+		this.startGame.setVisible(true);
 	}
 	
 	public void showWinners(){
@@ -302,6 +311,7 @@ public class TableController {
 	}
 
 	private void deal() {
+		// This will work for all games.
 		for (int i = 0; i < this.playGame.getEGame().getCardsDealt(); i++) {
 			for (Player p : this.playGame.getPlayer()) {
 				ImageView curImg = getCardImage(p.getHand().getHand().get(i));
@@ -336,9 +346,18 @@ public class TableController {
 						// transFadeCardInOut.play();
 
 						curImg.setVisible(true);
+						
 					}
 				});
 				trans.play();
+				showWinners();
+			}
+		}
+		if (this.playGame.getCommunityCards().size() > 0){
+			for (Card c : this.playGame.getCommunityCards()){
+				System.out.println(c);
+				ImageView curImg = getCardImage(c);
+				this.communityCards.getChildren().add(curImg);
 			}
 		}
 	}
@@ -350,6 +369,7 @@ public class TableController {
 		if (pokerTable.getChildren().contains(cardBackImg))
 			pokerTable.getChildren().remove(cardBackImg);
 		this.pokerTable.getChildren().add(cardBackImg);
+	
 
 		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), cardBackImg);
 		translateTransition.setFromX(0);

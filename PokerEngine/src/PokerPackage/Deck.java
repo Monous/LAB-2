@@ -51,7 +51,7 @@ public class Deck {
 				// and call it a day.
 				if (r.getRank() == wildCardRank) {
 					deck.add(new Card(Rank.JOKER));
-				} else {
+				} else if (r != Rank.JOKER){
 					Card card = new Card(r, s);
 					deck.add(card);
 				}

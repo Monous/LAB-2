@@ -23,7 +23,7 @@ public class Hand {
 	boolean jokerCard;
 	private HandType handType;
 	private List<Hand> combinations = new ArrayList<Hand>();
-	private ArrayList<Card> hand = new ArrayList<Card>(5);
+	private ArrayList<Card> hand = new ArrayList<Card>();
 	// suitsInHand holds the suit type (Suit key), and the **FREQUENCY** of that
 	private Map<Suit, Integer> suitsInHand = new HashMap<Suit, Integer>();
 	// sortedRankInHand holds the ranks (Key) (Ace, two, three...) and the
@@ -42,7 +42,7 @@ public class Hand {
 
 	// This should never be used explicitly
 
-	private Hand() {
+	public Hand() {
 	}
 
 	/**
@@ -72,6 +72,8 @@ public class Hand {
 
 	// Test constructor
 	public Hand(Card c1, Card c2, Card c3, Card c4, Card c5) {
+		// NOTE: using the ArrayList add method instead of this.addCard method because this.initSuitsAndSorted
+		// is called either in handleJokers or in the else clause
 		this.hand.add(c1);
 		this.hand.add(c2);
 		this.hand.add(c3);
@@ -168,6 +170,7 @@ public class Hand {
 
 	public void addCard(Card c) {
 		this.hand.add(c);
+		//this.initSuitsAndSorted();
 	}
 
 	public void handleJokers() {

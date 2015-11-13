@@ -1,5 +1,8 @@
 package game.poker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import PokerPackage.eGame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,9 +27,11 @@ public class RootController {
 	@FXML
 	private MenuItem omaha;
 	
+	ArrayList<MenuItem> gameItems;
+	
 	@FXML
 	private void initialize(){
-		fiveCardStud.setVisible(false);
+		/*fiveCardStud.setVisible(false);
 		setGame(fiveCardStud);
 		fiveCardJokerPoker.setOnAction(this::handleGame);
 		fiveCardWildPoker.setOnAction(this::handleGame);
@@ -34,7 +39,17 @@ public class RootController {
 		sevenCardDraw.setOnAction(this::handleGame);
 		texasHoldEm.setOnAction(this::handleGame);
 		omaha.setOnAction(this::handleGame);
+		*/
+		gameItems = new ArrayList<MenuItem>(Arrays.asList(fiveCardStud, fiveCardJokerPoker, fiveCardWildPoker, fiveCardDraw,
+				sevenCardDraw, texasHoldEm, omaha));
 		
+		for (MenuItem mi : gameItems){
+			mi.setOnAction(this::handleGame);
+			if (mi == fiveCardStud){
+				mi.setVisible(false);
+				setGame(fiveCardStud);
+			}
+		}
 		
 	}
 	
@@ -44,7 +59,15 @@ public class RootController {
 	
 	private void handleGame(ActionEvent e){
 		MenuItem gameType = (MenuItem) e.getSource();
-		setGame(gameType);
+		
+		for (MenuItem mi : gameItems){
+			if (!mi.isVisible()) mi.setVisible(true);
+			if (mi == gameType){
+				mi.setVisible(false);
+				setGame(gameType);
+			}
+		}
+		//setGame(gameType);
 	}
 	
 	private void setGame(MenuItem game){

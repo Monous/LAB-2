@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="/PokerDAL"/>
+	<classpathentry kind="lib" path="C:/Users/Moheem Ilyas/Documents/School/CSIC 181/Code Projects/Ext-JARS/combinatoricslib-2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
