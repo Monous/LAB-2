@@ -10,12 +10,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import PokerPackage.Card;
-import PokerPackage.Deck;
-import PokerPackage.DeckOutOfCardsException;
-import PokerPackage.Hand;
-import PokerPackage.Rank;
-import PokerPackage.Suit;
+import model.Card;
+import model.Deck;
+import model.DeckOutOfCardsException;
+import model.Hand;
+import model.Rank;
+import model.Suit;
 
 public class DeckTest {
 

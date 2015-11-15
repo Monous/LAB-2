@@ -1,55 +1,42 @@
 package game.poker.view;
 
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
+
 import java.util.HashMap;
 import java.util.Map;
 
-import PokerPackage.Card;
-import PokerPackage.Deck;
-import PokerPackage.Play;
-import PokerPackage.Player;
-import PokerPackage.Rank;
-import PokerPackage.Suit;
-import PokerPackage.eGame;
 import game.poker.MainApp;
 import game.poker.RootController;
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
+
 import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
+
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
+
 import javafx.animation.TranslateTransition;
-import javafx.animation.Animation;
-import javafx.animation.Animation.Status;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import model.Card;
+import model.Play;
+import model.Player;
+import model.eGame;
 
 public class TableController {
 
 	private Play playGame;
-	private ArrayList<Player> players = new ArrayList<Player>();
+	private MainApp mainApp;
+
 	
 	@FXML
 	private Text winnerText;
@@ -59,8 +46,7 @@ public class TableController {
 	private HBox communityCards;
 	@FXML
 	private BorderPane pokerTable;
-	private MainApp mainApp;
-
+	
 	@FXML
 	private HBox deckBox;
 	@FXML
@@ -203,9 +189,6 @@ public class TableController {
 	private void handleSit(ActionEvent event) {
 		Button btn = (Button) event.getSource();
 		for (Player player : playersAndNodes.keySet()) {
-			// Button playerButton = (Button)
-			// playersAndNodes.get(player).get("Sit");
-			// if (playerButton == null) System.out.println("True");
 			if (((Button) playersAndNodes.get(player).get("Sit")).getId() == btn.getId()) {
 				player.setName(((TextField) playersAndNodes.get(player).get("NameEntry")).getText());
 				((Button) playersAndNodes.get(player).get("Sit")).setVisible(false);
@@ -214,30 +197,8 @@ public class TableController {
 				((Text) playersAndNodes.get(player).get("Name")).setText(player.getName());
 				((Text) playersAndNodes.get(player).get("Name")).setVisible(true);
 				((TextField) playersAndNodes.get(player).get("NameEntry")).setVisible(false);
-				// ((HBox)
-				// playersAndNodes.get(player).get("CardBox")).setVisible(true);
 			}
 		}
-		/*
-		 * switch (id){ case "p1Sit": name = p1NameEntry.getText(); PlayerDomain
-		 * player1 = new PlayerDomain(); player1.setName(name);
-		 * players.add(player1); p1Leave.setVisible(true);
-		 * p1Leave.setOnAction(this::handleLeave); break;
-		 * 
-		 * case "p2Sit": name = p2NameEntry.getText(); PlayerDomain player2 =
-		 * new PlayerDomain(); player2.setName(name); players.add(player2);
-		 * p2Leave.setVisible(true); p2Leave.setOnAction(this::handleLeave);
-		 * break;
-		 * 
-		 * case "p3Sit": name = p3NameEntry.getText(); PlayerDomain player3 =
-		 * new PlayerDomain(); player3.setName(name); players.add(player3);
-		 * p3Leave.setVisible(true); p3Leave.setOnAction(this::handleLeave);
-		 * break;
-		 * 
-		 * case "p4Sit": name = p4NameEntry.getText(); PlayerDomain player4 =
-		 * new PlayerDomain(); player4.setName(name); players.add(player4);
-		 * p4Leave.setVisible(true); p4Leave.setOnAction(this::handleLeave); }
-		 */
 	}
 
 	@FXML
@@ -263,8 +224,7 @@ public class TableController {
 		eGame game = RootController.getGameType();
 
 		this.playGame = new Play(game);
-		// this.playGame.setPlayers((ArrayList<Player>)
-		// playersAndNodes.keySet());
+		
 		for (Player p : playersAndNodes.keySet()) {
 			if (((Button) playersAndNodes.get(p).get("Sit")).isVisible() == false) {
 				this.playGame.addPlayer(p);
@@ -272,15 +232,9 @@ public class TableController {
 		}
 
 		this.playGame.play();
-		for (Player p : playersAndNodes.keySet()) {
-			System.out.println(p.getHand());
-		}
-		// ImageView deckImage = new
-		// ImageView("PokerGUI/resources/img/b1fh.png");
-
+		
 		deal();
 		
-		showWinners();
 		playAgain.setOnAction(this::handlePlayAgain);
 		playAgain.setVisible(true);
 		
@@ -305,20 +259,23 @@ public class TableController {
 		}
 		
 		String winners = new String("The winner(s) are: ");
-		//if (this.playGame.getWinners().isEmpty()) System.out.println("True");
+		
 		for (Player p : this.playGame.getWinners()){
-			// The if statement is because the if there is a tie, the winner's name would show twice....probably should look into this
+			// The if statement is because if there is judging of the hands
+			// goes to the kickers, the winner's name would show twice....probably should look into this
 			if (!winners.contains(p.getName())) winners = winners + p.getName() + "  ";
 		}
 		this.winnerText.setText(winners);
 		this.winnerText.setVisible(true);
 	}
 
+	// http://examples.javacodegeeks.com/desktop-java/javafx/javafx-animation-example/
 	private void deal() {
-		// This will work for all games.
+		// seqTrans is the actual transition that will be played to create the effect of an actual dealer
 		SequentialTransition seqTrans = new SequentialTransition();
+		
+		// We need to make a transition for each card in the players hand and then add it to seqTrans
 		for (int i = 0; i < this.playGame.getEGame().getCardsDealt(); i++) {
-			
 			for (Player p : this.playGame.getPlayer()) {
 				ImageView cardBackImg = new ImageView(
 						new Image(getClass().getResourceAsStream("/img/b1fv.png"), 75, 75, true, true));
@@ -338,49 +295,71 @@ public class TableController {
 
 				ParallelTransition trans = createTransition(startPoint, endPoint, cardBackImg);
 
-				// final ParallelTransition transFadeCardInOut =
-				// createFadeTransition(curImg);
 				trans.setCycleCount(1);
 				trans.setAutoReverse(false);
 				
 				trans.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
-
-						// get rid of the created card, run the fade in/fade out
-						// transition
-						// This isn't going to fire until the transMoveRotCard
-						// is
-						// complete.
 						pokerTable.getChildren().remove(cardBackImg);
 
-						// transFadeCardInOut.play();
-
-						curImg.setVisible(true);
-					
-						
-						
+						curImg.setVisible(true);											
 					}
 				});
-				
-				//trans.play();
 				seqTrans.getChildren().add(trans);
 			}
 			
 		}
 		
-		seqTrans.play();
+		// If we don't set this property and simply call showWinners, then the winners will show before all the cards have been dealt.
+		
 		
 		if (this.playGame.getCommunityCards().size() > 0){
 			for (Card c : this.playGame.getCommunityCards()){
-				System.out.println(c);
+				ImageView cardBackImg = new ImageView(
+						new Image(getClass().getResourceAsStream("/img/b1fv.png"), 75, 75, true, true));
+				
 				ImageView curImg = getCardImage(c);
+				
+
 				this.communityCards.getChildren().add(curImg);
+				curImg.setVisible(false);
+
+				
+				Bounds startBounds = this.deckBox.localToScene(this.deckBox.getBoundsInLocal());
+				Point2D startPoint = new Point2D(startBounds.getMinX(), startBounds.getMinY());
+
+				Bounds endBounds = curImg.localToScene(curImg.getBoundsInLocal());
+				Point2D endPoint = new Point2D(endBounds.getMinX(), endBounds.getMinY());
+
+				ParallelTransition trans = createTransition(startPoint, endPoint, cardBackImg);
+
+				trans.setCycleCount(1);
+				trans.setAutoReverse(false);
+				
+				trans.onFinishedProperty().set(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						pokerTable.getChildren().remove(cardBackImg);
+
+						curImg.setVisible(true);											
+					}
+				});
+				seqTrans.getChildren().add(trans);
 			}
 		}
 		
+		seqTrans.onFinishedProperty().set(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent e){
+				showWinners();
+			}
+		});
+		seqTrans.play();
+		
 	}
 
+	// Thanks Bert:  https://github.com/CISC181/BorgataNTier/blob/master/BorgataJavaFx/src/main/java/poker/app/view/PokerTableController.java
 	private ParallelTransition createTransition(Point2D pntStartPoint, Point2D pntEndPoint, ImageView cardBackImg) {
 
 		if (pokerTable.getChildren().contains(cardBackImg))
@@ -401,10 +380,6 @@ public class TableController {
 		translateTransition.setCycleCount(1);
 		translateTransition.setAutoReverse(false);
 
-		// int rnd = randInt(1,6);
-
-		// System.out.println(rnd);
-
 		RotateTransition rotateTransition = new RotateTransition(Duration.millis(150), cardBackImg);
 		rotateTransition.setByAngle(90F);
 		rotateTransition.setCycleCount(3);
@@ -413,32 +388,8 @@ public class TableController {
 		ParallelTransition parallelTransition = new ParallelTransition();
 		parallelTransition.getChildren().addAll(translateTransition, rotateTransition);
 
-		// SequentialTransition seqTrans = new SequentialTransition();
-		// seqTrans.getChildren().addAll(parallelTransition);
-
 		return parallelTransition;
 	}
-
-	/*
-	 * private ParallelTransition createFadeTransition(final ImageView img) {
-	 * 
-	 * FadeTransition fadeOutTransition = new
-	 * FadeTransition(Duration.seconds(.25), cardBackImg);
-	 * fadeOutTransition.setFromValue(1.0); fadeOutTransition.setToValue(0.0);
-	 * 
-	 * FadeTransition fadeInTransition = new
-	 * FadeTransition(Duration.seconds(.25), img);
-	 * fadeInTransition.setOnFinished(new EventHandler<ActionEvent>() {
-	 * 
-	 * @Override public void handle(ActionEvent e) { img.setVisible(true); } });
-	 * fadeInTransition.setFromValue(0.0); fadeInTransition.setToValue(1.0);
-	 * 
-	 * ParallelTransition parallelTransition = new ParallelTransition();
-	 * parallelTransition.getChildren().addAll(fadeOutTransition,
-	 * fadeInTransition);
-	 * 
-	 * return parallelTransition; }
-	 */
 
 	private ImageView getCardImage(Card c) {
 		String src = c.getSuit().getSuit() + c.getRank().getRank();

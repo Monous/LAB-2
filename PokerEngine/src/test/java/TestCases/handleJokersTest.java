@@ -11,11 +11,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import PokerPackage.Card;
-import PokerPackage.Hand;
-import PokerPackage.HandType;
-import PokerPackage.Rank;
-import PokerPackage.Suit;
+import model.Card;
+import model.Hand;
+import model.HandType;
+import model.Rank;
+import model.Suit;
 
 /**
  * 

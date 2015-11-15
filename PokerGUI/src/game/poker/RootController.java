@@ -3,10 +3,10 @@ package game.poker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import PokerPackage.eGame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import model.eGame;
 
 public class RootController {
 	private MainApp mainApp;

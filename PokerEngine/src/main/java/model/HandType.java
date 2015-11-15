@@ -1,4 +1,4 @@
-package PokerPackage;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;

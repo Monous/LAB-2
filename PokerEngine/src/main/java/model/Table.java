@@ -1,3 +1,4 @@
+package model;
 /*package PokerPackage;
 
 import java.util.HashMap;

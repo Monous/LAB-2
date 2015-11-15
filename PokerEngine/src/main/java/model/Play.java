@@ -1,4 +1,4 @@
-package PokerPackage;
+package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +12,8 @@ import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 
 import domain.PlayDomain;
+
+
 
 /**
  * @author Moheem Ilyas
@@ -144,8 +146,6 @@ public class Play extends PlayDomain {
 		// of the initial vector
 		Generator<Card> gen = Factory.createSimpleCombinationGenerator(initialVector, 3);
 
-		// for (ICombinatoricsVector<Card> perm : gen)
-		/// System.out.println( perm );
 
 		for (Player p : this.players) {
 			List<Hand> possibleHands = new ArrayList<Hand>();

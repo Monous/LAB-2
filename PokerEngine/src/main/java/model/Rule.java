@@ -1,4 +1,4 @@
-package PokerPackage;
+package model;
 
 public class Rule {
 
