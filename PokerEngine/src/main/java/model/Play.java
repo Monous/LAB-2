@@ -36,6 +36,10 @@ public class Play extends PlayDomain {
 	private Deck deck = null;
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
 
+	public Play(){
+		
+	}
+	
 	public Play(eGame gameType) {
 		this.gameType = gameType;
 	}
@@ -89,7 +93,8 @@ public class Play extends PlayDomain {
 			playSevenDraw();
 			break;
 		case HOLDEM:
-			playHoldEm();
+			//playHoldEm();
+			playHoldemTest();
 			break;
 		case OMAHA:
 			playOmaha();
@@ -127,7 +132,74 @@ public class Play extends PlayDomain {
 	private void playSevenDraw() {
 
 	}
+	
+	private void playHoldemTest(){
+		if (this.deck == null)
+			this.deck = new Deck();
+		List<Hand> playerHands = new ArrayList<Hand>();
+		Map<Player, Hand> tempMap = new HashMap<Player, Hand>();
+		// Dealing a card to each player IN TURN
+		initializeHands();
+		
+		for (Player p : this.players) {
+			List<Hand> possibleHands = new ArrayList<Hand>();
+			
+			
+			/*
+			 * We are going to put all of the cards into one vector and then do a 7 choose 5
+			 * to get all the combinations. We will then remove any combinations that doesn't contain
+			 * at least one of the cards that are already in the hand.
+			 */
+			ICombinatoricsVector<Card> initialVector = Factory.createVector(new Card[] {p.getHand().getHand().get(0),
+					p.getHand().getHand().get(1), communityCards.get(0),
+					communityCards.get(1), communityCards.get(2), communityCards.get(3), communityCards.get(4) });
+			
+			Generator<Card> gen = Factory.createSimpleCombinationGenerator(initialVector, 5);
+			
+			ArrayList<ArrayList<Card>> combos = new ArrayList<>();
+			for (ICombinatoricsVector<Card> combo : gen){
+				Hand tempHand = new Hand();
+				ArrayList<Card> cardsForHand = new ArrayList<>();
+				for (Card c : combo){
+					cardsForHand.add(c);
+				}
+				
+				// The combination has to at least one of the cards already in the players hand
+				if (cardsForHand.contains(p.getHand().getHand().get(0)) || cardsForHand.contains(p.getHand().getHand().get(1))){
+					tempHand = new Hand(cardsForHand.get(0), cardsForHand.get(1), cardsForHand.get(2),
+							cardsForHand.get(3), cardsForHand.get(4));
+					
+					possibleHands.add(tempHand);
+				}
+			}
+			Hand bestHand = possibleHands.get(HandType.judgeHands(possibleHands).get(0));
+			p.getHand().setHandType(bestHand.getHandType());
+			tempMap.put(p, bestHand);
+			
+			//playerHands.add(possibleHands.get(HandType.judgeHands(possibleHands).get(0)));
+			//p.getHand().setHandType(possibleHands.get(HandType.judgeHands(possibleHands).get(0)).getHandType());
+		}
+		
+		for (Hand h : tempMap.values()) {
+			playerHands.add(h);
+		}
 
+		for (Integer i : HandType.judgeHands(playerHands)) {
+			for (Player p : tempMap.keySet()) {
+				// If the players' hand in the map equals the hand in tempHands
+				// (positions of best hands array) at index i, add the player to
+				// the winners array
+				// This relies on pass by ref.
+				if (tempMap.get(p) == playerHands.get(i))
+					winners.add(p);
+			}
+		}
+		
+	}
+
+	/*
+	 * Original holdem. will delete later. might be useful later.
+	 */
 	private void playHoldEm() {
 		if (this.deck == null)
 			this.deck = new Deck();
@@ -175,6 +247,7 @@ public class Play extends PlayDomain {
 		}
 
 		for (Player p : this.players) {
+			System.out.println(p.getHand());
 			playerHands.add(p.getHand());
 		}
 

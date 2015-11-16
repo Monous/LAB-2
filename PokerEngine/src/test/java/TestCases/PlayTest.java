@@ -40,6 +40,8 @@ public class PlayTest {
 		 * All we have to do is rigg the deck to make sure that shit works.
 		 * The Play class will take care of making the players hand and community cards.
 		 */
+		gameHoldem = new Play();
+		playerHoldem = new Player();
 		deckHoldem = new Deck();
 		// Rigging for a straight
 		pH1 = new Card(Rank.FIVE, Suit.CLUB);
@@ -51,6 +53,7 @@ public class PlayTest {
 		cH4 = new Card(Rank.EIGHT, Suit.HEART);
 		cH5 = new Card(Rank.NINE, Suit.DIAMOND);
 		
+		cardsHoldem = new ArrayList<Card>();
 		cardsHoldem.addAll(Arrays.asList(pH1, pH2, cH1, cH2, cH3, cH4, cH5));
 		
 		for (int i = 0; i < cardsHoldem.size(); i++){
@@ -58,6 +61,8 @@ public class PlayTest {
 		}
 		
 		
+		gameOmaha = new Play();
+		playerOmaha = new Player();
 		deckOmaha = new Deck();
 		// Rigging for a full house.
 		pO1 = new Card(Rank.TWO, Suit.SPADE);
@@ -66,11 +71,12 @@ public class PlayTest {
 		pO4 = new Card(Rank.JACK, Suit.HEART);
 		
 		cO1 = new Card(Rank.TWO, Suit.CLUB);
-		cO2 = new Card(Rank.TEN, Suit.DIAMOND);
+		cO2 = new Card(Rank.TWO, Suit.DIAMOND);
 		cO3 = new Card(Rank.EIGHT, Suit.SPADE);
 		cO4 = new Card(Rank.FOUR, Suit.SPADE);
 		cO5 = new Card(Rank.JACK, Suit.CLUB);
 		
+		cardsOmaha = new ArrayList<Card>();
 		cardsOmaha.addAll(Arrays.asList(pO1, pO2, pO3, pO4, cO1, cO2, cO3, cO4, cO5));
 		for (int i = 0; i < cardsOmaha.size(); i++){
 			deckOmaha.getDeck().add(i, cardsOmaha.get(i));
@@ -98,7 +104,7 @@ public class PlayTest {
 		gameHoldem.play();
 		
 		// The player could have a pair or straight...should be straight
-		assertEquals(gameHoldem.getWinners().get(0).getHand().getHandType(), HandType.STRAIGHT);
+		assertEquals(HandType.STRAIGHT, gameHoldem.getWinners().get(0).getHand().getHandType());
 	}
 	
 	@Test
