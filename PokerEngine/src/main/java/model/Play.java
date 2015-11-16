@@ -50,10 +50,10 @@ public class Play extends PlayDomain {
 		this.players = players;
 	}
 
-	public void setGameType(eGame gameType, ArrayList<Player> players) {
-		this.players = players;
+	public void setGameType(eGame gameType) {
 		this.gameType = gameType;
 	}
+
 
 	public eGame getEGame() {
 		return this.gameType;
