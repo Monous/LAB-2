@@ -13,8 +13,6 @@ import org.paukov.combinatorics.ICombinatoricsVector;
 
 import domain.PlayDomain;
 
-
-
 /**
  * @author Moheem Ilyas
  * 
@@ -35,7 +33,7 @@ public class Play extends PlayDomain {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Player> winners = new ArrayList<Player>();
 	private eGame gameType;
-	private Deck deck;
+	private Deck deck = null;
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
 
 	public Play(eGame gameType) {
@@ -54,7 +52,9 @@ public class Play extends PlayDomain {
 		this.gameType = gameType;
 	}
 
-
+	public void setDeck(Deck deck){
+		this.deck = deck;
+	}
 	public eGame getEGame() {
 		return this.gameType;
 	}
@@ -98,7 +98,8 @@ public class Play extends PlayDomain {
 	}
 
 	private void playFiveStud() {
-		this.deck = new Deck(1, 0, 0);
+		if (this.deck == null)
+			this.deck = new Deck();
 		ArrayList<Hand> playerHands = new ArrayList<Hand>();
 		for (Player p : this.players) {
 			p.setHand(this.deck);
@@ -128,7 +129,8 @@ public class Play extends PlayDomain {
 	}
 
 	private void playHoldEm() {
-		this.deck = new Deck();
+		if (this.deck == null)
+			this.deck = new Deck();
 		List<Hand> playerHands = new ArrayList<Hand>();
 		// Dealing a card to each player IN TURN
 		initializeHands();
@@ -145,7 +147,6 @@ public class Play extends PlayDomain {
 		// Create a simple combination generator to generate 3-combinations
 		// of the initial vector
 		Generator<Card> gen = Factory.createSimpleCombinationGenerator(initialVector, 3);
-
 
 		for (Player p : this.players) {
 			List<Hand> possibleHands = new ArrayList<Hand>();
@@ -183,8 +184,8 @@ public class Play extends PlayDomain {
 	}
 
 	private void playOmaha() {
-
-		this.deck = new Deck();
+		if (this.deck == null)
+			this.deck = new Deck();
 		List<Hand> playerHands = new ArrayList<Hand>();
 
 		// Dealing a card to each player IN TURN
@@ -273,5 +274,5 @@ public class Play extends PlayDomain {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

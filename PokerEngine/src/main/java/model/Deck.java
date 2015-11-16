@@ -96,6 +96,10 @@ public class Deck {
 			System.out.println(c);
 		}
 	}
+	
+	public ArrayList<Card> getDeck(){
+		return this.deck;
+	}
 
 	// This method has not yet been incorporated for the rest of the code, but I
 	// thought it could be useful for future error handling endeavors.
