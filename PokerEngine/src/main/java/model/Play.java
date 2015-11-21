@@ -31,10 +31,13 @@ import domain.PlayDomain;
  */
 public class Play extends PlayDomain {
 	private ArrayList<Player> players = new ArrayList<Player>();
-	private ArrayList<Player> winners = new ArrayList<Player>();
+	//private ArrayList<Player> winners = new ArrayList<Player>();
+	private Map<Player, Hand> winners = new HashMap<Player, Hand>();
 	private eGame gameType;
 	private Deck deck = null;
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
+	// Just to let other components know if the win was based on kickers
+	private boolean kickersNeeded = false;
 
 	public Play(){
 		
@@ -67,12 +70,16 @@ public class Play extends PlayDomain {
 		return this.players;
 	}
 
-	public ArrayList<Player> getWinners() {
+	public Map<Player, Hand> getWinners() {
 		return this.winners;
 	}
 
 	public ArrayList<Card> getCommunityCards() {
 		return this.communityCards;
+	}
+	
+	public boolean getKickersNeeded(){
+		return this.kickersNeeded;
 	}
 
 	public void play() {
@@ -102,6 +109,7 @@ public class Play extends PlayDomain {
 		}
 	}
 
+
 	private void playFiveStud() {
 		if (this.deck == null)
 			this.deck = new Deck();
@@ -113,7 +121,8 @@ public class Play extends PlayDomain {
 
 		ArrayList<Integer> positions = HandType.judgeHands(playerHands);
 		for (Integer i : positions) {
-			winners.add(players.get(i));
+			//winners.add(players.get(i));
+			winners.put(players.get(i), players.get(i).getHand());
 		}
 	}
 
@@ -166,6 +175,7 @@ public class Play extends PlayDomain {
 				
 				// The combination has to at least one of the cards already in the players hand
 				if (cardsForHand.contains(p.getHand().getHand().get(0)) || cardsForHand.contains(p.getHand().getHand().get(1))){
+					// This should be replaced by a constructor that takes in an array of cards...we'll just add that to the wishlist for now.
 					tempHand = new Hand(cardsForHand.get(0), cardsForHand.get(1), cardsForHand.get(2),
 							cardsForHand.get(3), cardsForHand.get(4));
 					
@@ -191,7 +201,8 @@ public class Play extends PlayDomain {
 				// the winners array
 				// This relies on pass by ref.
 				if (tempMap.get(p) == playerHands.get(i))
-					winners.add(p);
+					//winners.add(p);
+					winners.put(p, tempMap.get(p));
 			}
 		}
 		
@@ -252,7 +263,7 @@ public class Play extends PlayDomain {
 		}
 
 		for (Integer winnerPos : HandType.judgeHands(playerHands)) {
-			this.winners.add(this.players.get(winnerPos));
+			//this.winners.add(this.players.get(winnerPos));
 		}
 	}
 
@@ -320,7 +331,8 @@ public class Play extends PlayDomain {
 				// the winners array
 				// This relies on pass by ref.
 				if (tempMap.get(p) == playerHands.get(i))
-					winners.add(p);
+					//winners.add(p);
+					winners.put(p, tempMap.get(p));
 			}
 		}
 

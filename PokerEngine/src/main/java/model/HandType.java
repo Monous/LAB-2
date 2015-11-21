@@ -357,4 +357,87 @@ public enum HandType {
 		Collections.sort(handTypeArray);
 	}
 
+	public static ArrayList<Card> getWinnerCards(Hand playerHand, boolean kickersNeeded) {
+		ArrayList<Card> returnList = new ArrayList<Card>();
+		/*
+		 * Go through the hands, add all the cards that make the hand type to
+		 * the return list. If the result went to kickers add all the cards that
+		 * are in the hand and NOT IN THE return list (don't add the cards that
+		 * make up the winning hand)
+		 */
+		switch (playerHand.getHandType()) {
+		case ONE_PAIR:
+
+			for (Rank r : playerHand.getSortedVals().keySet()) {
+				if (playerHand.getSortedVals().get(r) == 2) {
+					for (Card c : playerHand.getHand()) {
+						if (c.getRank() == r)
+							returnList.add(c);
+					}
+					break;
+				}
+			}
+			/*if (kickersNeeded){
+				for (Rank c : playerHand.getKickerPossibilities()){
+					
+				}
+			}*/
+		case TWO_PAIR:
+			for (Rank r : playerHand.getSortedVals().keySet()) {
+				if (playerHand.getSortedVals().get(r) == 2) {
+					for (Card c : playerHand.getHand()) {
+						if (c.getRank() == r)
+							returnList.add(c);
+					}
+					break;
+				}
+			}
+		case THREE_OF_A_KIND:
+			for (Rank r : playerHand.getSortedVals().keySet()) {
+				if (playerHand.getSortedVals().get(r) == 3) {
+					for (Card c : playerHand.getHand()) {
+						if (c.getRank() == r)
+							returnList.add(c);
+					}
+					break;
+				}
+			}
+		case FULL_HOUSE:
+			for (Rank r : playerHand.getSortedVals().keySet()) {
+				if (playerHand.getSortedVals().get(r) == 2 || playerHand.getSortedVals().get(r) == 3) {
+					for (Card c : playerHand.getHand()) {
+						if (c.getRank() == r)
+							returnList.add(c);
+					}
+					break;
+				}
+			}
+		case FOUR_OF_A_KIND:
+			for (Rank r : playerHand.getSortedVals().keySet()) {
+				if (playerHand.getSortedVals().get(r) == 4) {
+					for (Card c : playerHand.getHand()) {
+						if (c.getRank() == r)
+							returnList.add(c);
+					}
+					break;
+				}
+			}
+		case FIVE_OF_A_KIND:
+			for (Rank r : playerHand.getSortedVals().keySet()) {
+				if (playerHand.getSortedVals().get(r) == 5) {
+					for (Card c : playerHand.getHand()) {
+						if (c.getRank() == r)
+							returnList.add(c);
+					}
+					break;
+				}
+			}
+		case FLUSH:
+			
+		default:
+			break;
+		}
+		return returnList;
+	}
+
 }

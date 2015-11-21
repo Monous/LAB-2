@@ -104,7 +104,7 @@ public class PlayTest {
 		gameHoldem.play();
 		
 		// The player could have a pair or straight...should be straight
-		assertEquals(HandType.STRAIGHT, gameHoldem.getWinners().get(0).getHand().getHandType());
+		assertEquals(HandType.STRAIGHT, gameHoldem.getWinners().get(playerHoldem).getHandType());
 	}
 	
 	@Test
@@ -114,7 +114,7 @@ public class PlayTest {
 		gameOmaha.setDeck(deckOmaha);
 		gameOmaha.play();
 		
-		assertEquals(gameOmaha.getWinners().get(0).getHand().getHandType(), HandType.FULL_HOUSE);
+		assertEquals(gameOmaha.getWinners().get(playerOmaha).getHandType(), HandType.FULL_HOUSE);
 	}
 
 }

@@ -12,7 +12,7 @@
 
 <BorderPane fx:id="pokerTable" prefHeight="700.0" prefWidth="943.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.poker.view.TableController">
    <top>
-      <AnchorPane id="p1" maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="p1" maxHeight="200.0" maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="200.0" right="200.0" />
          </BorderPane.margin>
@@ -29,7 +29,8 @@
             <HBox id="p1Hbox" fx:id="p1CardBox" layoutX="100.0" layoutY="58.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="80.0" />
             <Text fx:id="p1Name" fill="#f2eaea" layoutX="189.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="40.05078125" />
             <TextField fx:id="p1NameEntry" layoutX="86.0" layoutY="62.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="62.0" />
-            <Text fx:id="p1HandType" fill="#f5f2f2" layoutX="189.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.bottomAnchor="6.05" />
+            <Text fx:id="p1HandType" fill="#f5f2f2" layoutX="363.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.bottomAnchor="143.0" />
+            <ImageView fx:id="p1Winner" fitHeight="26.0" fitWidth="46.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </top>
@@ -46,11 +47,12 @@
             <Text fx:id="p4Name" fill="#f8f3f3" layoutX="89.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="200.05078125" />
             <TextField fx:id="p4NameEntry" layoutX="26.0" layoutY="224.0" AnchorPane.leftAnchor="20.0" />
             <Text fx:id="p4HandType" fill="#fff8f8" layoutX="20.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="6.05078125" />
+            <ImageView fx:id="p4Winner" fitHeight="26.0" fitWidth="46.0" layoutX="88.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane id="com" maxHeight="300.0" maxWidth="390.0" prefHeight="300.0" prefWidth="390.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="com" maxHeight="300.0" maxWidth="390.0" prefHeight="245.0" prefWidth="390.0" BorderPane.alignment="CENTER">
          <children>
             <HBox id="comHbox" fx:id="communityCards" layoutX="95.0" layoutY="62.0" prefHeight="100.0" prefWidth="200.0" />
             <ButtonBar layoutY="258.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0">
@@ -80,11 +82,12 @@
             <Text fx:id="p2Name" fill="#f2efef" layoutX="145.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="200.05078125" />
             <TextField fx:id="p2NameEntry" layoutX="104.0" layoutY="224.0" AnchorPane.rightAnchor="20.0" />
             <Text fx:id="p2HandType" fill="#f5f0f0" layoutX="213.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="6.05078125" />
+            <ImageView fx:id="p2Winner" fitHeight="20.0" fitWidth="46.0" layoutX="97.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </right>
    <bottom>
-      <AnchorPane id="p3" maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="p3" maxHeight="200.0" maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="200.0" right="200.0" />
          </BorderPane.margin>
@@ -101,7 +104,8 @@
             <HBox id="p3Hbox" fx:id="p3CardBox" layoutX="100.0" layoutY="27.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="30.0" />
             <Text fx:id="p3Name" fill="#f8f8f8" layoutX="189.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
             <TextField fx:id="p3NameEntry" layoutX="86.0" layoutY="111.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="100.0" />
-            <Text fx:id="p3HandType" fill="#fcfcfc" layoutX="189.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="6.05078125" />
+            <Text fx:id="p3HandType" fill="#fcfcfc" layoutX="363.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="147.0" />
+            <ImageView fx:id="p3Winner" fitHeight="26.0" fitWidth="46.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </bottom>

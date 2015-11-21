@@ -2,6 +2,7 @@ package game.poker.view;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Card;
+import model.Hand;
 import model.Play;
 import model.Player;
 import model.eGame;
@@ -64,6 +66,8 @@ public class TableController {
 	private HBox p1CardBox;
 	@FXML
 	private Text p1HandType;
+	@FXML
+	private ImageView p1Winner;
 	
 
 	@FXML
@@ -78,6 +82,8 @@ public class TableController {
 	private HBox p2CardBox;
 	@FXML
 	private Text p2HandType;
+	@FXML
+	private ImageView p2Winner;
 
 	@FXML
 	private Button p3Sit;
@@ -91,7 +97,8 @@ public class TableController {
 	private HBox p3CardBox;
 	@FXML
 	private Text p3HandType;
-	
+	@FXML
+	private ImageView p3Winner;
 
 	@FXML
 	private Button p4Sit;
@@ -105,6 +112,8 @@ public class TableController {
 	private HBox p4CardBox;
 	@FXML
 	private Text p4HandType;
+	@FXML
+	private ImageView p4Winner;
 	
 
 	private Map<Player, Map<String, Object>> playersAndNodes = new HashMap<Player, Map<String, Object>>();
@@ -132,6 +141,7 @@ public class TableController {
 				put("NameEntry", p1NameEntry);
 				put("CardBox", p1CardBox);
 				put("HandTypeText", p1HandType);
+				put("Winner", p1Winner);
 			}
 		};
 
@@ -143,6 +153,7 @@ public class TableController {
 				put("NameEntry", p2NameEntry);
 				put("CardBox", p2CardBox);
 				put("HandTypeText", p2HandType);
+				put("Winner", p2Winner);
 			}
 		};
 
@@ -154,6 +165,7 @@ public class TableController {
 				put("NameEntry", p3NameEntry);
 				put("CardBox", p3CardBox);
 				put("HandTypeText", p3HandType);
+				put("Winner", p3Winner);
 			}
 		};
 
@@ -165,6 +177,7 @@ public class TableController {
 				put("NameEntry", p4NameEntry);
 				put("CardBox", p4CardBox);
 				put("HandTypeText", p4HandType);
+				put("Winner", p4Winner);
 			}
 		};
 
@@ -243,8 +256,9 @@ public class TableController {
 	private void handlePlayAgain(ActionEvent e){
 		this.communityCards.getChildren().clear();
 		for (Map<String, Object> playerMap : playersAndNodes.values()) {
-			((HBox) playerMap.get("CardBox")).getChildren().clear();;
-			((Text) playerMap.get("HandTypeText")).setText(null);;
+			((HBox) playerMap.get("CardBox")).getChildren().clear();
+			((Text) playerMap.get("HandTypeText")).setText(null);
+			((ImageView) playerMap.get("Winner")).setImage(null);
 		}
 		
 		this.winnerText.setText(null);
@@ -260,11 +274,73 @@ public class TableController {
 		
 		String winners = new String("The winner(s) are: ");
 		
-		for (Player p : this.playGame.getWinners()){
+		Map<Player, Hand> winPlayerHandMap = this.playGame.getWinners();
+		ParallelTransition winTrans = new ParallelTransition();
+		
+		for (Player p : this.playGame.getWinners().keySet()){
+			// ArrayList to get the indexes of the ImageViews in the players hbox
+			ArrayList<Integer> handCardIndexes = new ArrayList<Integer>();
+			// ArrayList to get the indexes of the comm cards ImageViews in the comm hbox
+			ArrayList<Integer> comCardIndexes = new ArrayList<Integer>();
+			for (Card c : winPlayerHandMap.get(p).getHand()){
+				//winPlayerHandMap.get(p).getHand().indexOf(c);
+				if (p.getHand().getHand().contains(c)){
+					handCardIndexes.add(p.getHand().getHand().indexOf(c));
+				} else if (this.playGame.getCommunityCards().contains(c)){
+					comCardIndexes.add(this.playGame.getCommunityCards().indexOf(c));
+				}
+			}
+			
+			
+			// Create a transition for each card in the players dealt hand that is a part of the winning hand 
+			for (Integer i : handCardIndexes){
+				Bounds startBounds = ((HBox) playersAndNodes.get(p).get("CardBox")).getChildren().get(i).localToScene(((HBox) playersAndNodes.get(p).get("CardBox")).getChildren().get(i).getBoundsInLocal());
+				Point2D startPoint = new Point2D(startBounds.getMinX(), startBounds.getMinY());
+
+				Bounds endBounds = ((HBox) playersAndNodes.get(p).get("CardBox")).getChildren().get(i).localToScene(((HBox) playersAndNodes.get(p).get("CardBox")).getChildren().get(i).getBoundsInLocal());
+				Point2D endPoint = new Point2D(endBounds.getMinX(), endBounds.getMinY() - 6.0);
+
+				TranslateTransition trans = new TranslateTransition(Duration.millis(500), ((HBox) playersAndNodes.get(p).get("CardBox")).getChildren().get(i));
+				trans.setFromX(0);
+				trans.setToX(endPoint.getX() - startPoint.getX());
+				trans.setFromY(0);
+				trans.setToY(endPoint.getY() - startPoint.getY());
+				
+				trans.setCycleCount(1);
+				trans.setAutoReverse(false);
+				
+				winTrans.getChildren().add(trans);
+			}
+			
+			for (Integer i : comCardIndexes){
+				
+				Bounds startBounds = this.communityCards.getChildren().get(i).localToScene(this.communityCards.getChildren().get(i).getBoundsInLocal());
+				Point2D startPoint = new Point2D(startBounds.getMinX(), startBounds.getMinY());
+
+				Bounds endBounds = this.communityCards.getChildren().get(i).localToScene(this.communityCards.getChildren().get(i).getBoundsInLocal());
+				Point2D endPoint = new Point2D(endBounds.getMinX(), endBounds.getMinY() - 6.0);
+
+				TranslateTransition trans = new TranslateTransition(Duration.millis(500), this.communityCards.getChildren().get(i));
+				trans.setFromX(0);
+				trans.setToX(endPoint.getX() - startPoint.getX());
+				trans.setFromY(0);
+				trans.setToY(endPoint.getY() - startPoint.getY());
+				trans.setCycleCount(1);
+				trans.setAutoReverse(false);
+				
+				winTrans.getChildren().add(trans);
+				
+			}
+			((ImageView) playersAndNodes.get(p).get("Winner")).setImage(new Image(getClass().getResourceAsStream("/img/winner.jpg"), 75, 75, true, true));
+			
 			// The if statement is because if there is judging of the hands
 			// goes to the kickers, the winner's name would show twice....probably should look into this
+			 
+		
 			if (!winners.contains(p.getName())) winners = winners + p.getName() + "  ";
+			
 		}
+		winTrans.play();
 		this.winnerText.setText(winners);
 		this.winnerText.setVisible(true);
 	}
@@ -281,7 +357,7 @@ public class TableController {
 						new Image(getClass().getResourceAsStream("/img/b1fv.png"), 75, 75, true, true));
 				
 				ImageView curImg = getCardImage(p.getHand().getHand().get(i));
-				
+			
 
 				((HBox) playersAndNodes.get(p).get("CardBox")).getChildren().add(curImg);
 				curImg.setVisible(false);
